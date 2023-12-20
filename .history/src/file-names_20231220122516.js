@@ -22,14 +22,17 @@ function renameFiles(names) {
   const generateNewName = (name, count) => `${name}(${count})`;
 
   const result = names.map(name => {
+    // If the name is not in the count, add it and return the same name
     if (!nameCount.hasOwnProperty(name)) {
       nameCount[name] = 1;
       return name;
     }
 
+    // If the name is already in the count, generate a new name with a suffix
     const count = nameCount[name]++;
     const newName = generateNewName(name, count);
 
+    // Update the count for the newly generated name
     nameCount[newName] = 1;
 
     return newName;

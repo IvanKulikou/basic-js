@@ -16,22 +16,19 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  const repeatTimes = options.repeatTimes || 1;
-  const separator = options.separator || '+';
-  const addition =
-    options.addition === undefined ? '' : String(options.addition); // Convert addition to string
-  const additionRepeatTimes = options.additionRepeatTimes || 1;
-  const additionSeparator = options.additionSeparator || '|';
+  const {
+    repeatTimes = 1,
+    separator = '+',
+    addition = '',
+    additionRepeatTimes = 1,
+    additionSeparator = '|',
+  } = options;
 
-  const repeatedAddition = Array(additionRepeatTimes)
-    .fill(addition)
+  const repeatedWithAdditions = Array(additionRepeatTimes)
+    .fill(str + String(addition))
     .join(additionSeparator);
 
-  const repeatedString = Array(repeatTimes)
-    .fill(str + repeatedAddition)
-    .join(separator);
-
-  return repeatedString;
+  return Array(repeatTimes).fill(repeatedWithAdditions).join(separator);
 }
 
 module.exports = {
