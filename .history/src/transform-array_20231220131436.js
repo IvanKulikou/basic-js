@@ -2,35 +2,28 @@ const { NotImplementedError } = require('../extensions/index.js');
 
 function transform(arr) {
   if (!Array.isArray(arr)) {
-    throw new Error('Input must be an array');
+    throw new Error('Input should be an array');
   }
 
   const result = [];
-  let ignoreNext = false;
 
   for (let i = 0; i < arr.length; i++) {
-    if (ignoreNext) {
-      ignoreNext = false;
-      continue;
-    }
-
     switch (arr[i]) {
       case '--double-next':
-        if (i < arr.length - 1) {
+        if (i < arr.length - 1 && !isControlSequence(arr[i + 1])) {
           result.push(arr[i + 1]);
-          ignoreNext = true; // Skip the next element
-        }
-        break;
-      case '--double-prev':
-        if (i > 0) {
-          result.push(result[result.length - 1]);
         }
         break;
       case '--discard-next':
-        ignoreNext = true;
+        i++;
+        break;
+      case '--double-prev':
+        if (i > 0 && !isControlSequence(arr[i - 1])) {
+          result.push(result[result.length - 1]);
+        }
         break;
       case '--discard-prev':
-        if (i > 0) {
+        if (i > 0 && !isControlSequence(arr[i - 1])) {
           result.pop();
         }
         break;
@@ -40,6 +33,15 @@ function transform(arr) {
   }
 
   return result;
+}
+
+function isControlSequence(element) {
+  return [
+    '--double-next',
+    '--discard-next',
+    '--double-prev',
+    '--discard-prev',
+  ].includes(element);
 }
 
 module.exports = {

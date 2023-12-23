@@ -4,11 +4,6 @@ const MODERN_ACTIVITY = 15;
 const HALF_LIFE_PERIOD = 5730;
 
 function dateSample(sampleActivity) {
-  // Check if sampleActivity is a string
-  if (typeof sampleActivity !== 'string') {
-    return false;
-  }
-
   // Check if sampleActivity is a valid number and within the appropriate range
   const parsedActivity = parseFloat(sampleActivity);
   if (

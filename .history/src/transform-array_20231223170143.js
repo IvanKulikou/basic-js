@@ -10,6 +10,7 @@ function transform(arr) {
 
   for (let i = 0; i < arr.length; i++) {
     if (ignoreNext) {
+      // Skip the current element if it should be ignored
       ignoreNext = false;
       continue;
     }
@@ -18,7 +19,6 @@ function transform(arr) {
       case '--double-next':
         if (i < arr.length - 1) {
           result.push(arr[i + 1]);
-          ignoreNext = true; // Skip the next element
         }
         break;
       case '--double-prev':

@@ -20,7 +20,7 @@ const chainMaker = {
       Math.floor(position) !== position
     ) {
       this.chain = [];
-      throw new Error("You can't remove incorrect link!");
+      throw new Error('Invalid position');
     }
 
     this.chain.splice(position - 1, 1);

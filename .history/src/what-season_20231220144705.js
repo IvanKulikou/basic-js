@@ -1,11 +1,16 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
 function getSeason(date) {
-  if (!date) {
-    return 'Unable to determine the time of year!';
+  if (
+    !date ||
+    Object.prototype.toString.call(date) !== '[object Date]' ||
+    isNaN(date)
+  ) {
+    throw new Error('Invalid date!');
   }
 
-  if (!(date instanceof Date) || isNaN(date)) {
+  // Handle tricky moments (e.g., invalid dates like 'new Date(NaN)' or 'new Date("invalid")')
+  if (!isFinite(date)) {
     throw new Error('Invalid date!');
   }
 
